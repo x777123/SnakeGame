@@ -41,6 +41,7 @@ public class GamePanel extends JPanel implements ActionListener {
     public void startGame() {
         snake = new Snake();
         food = new Food();
+        food.generateNewFood(snake);
         scoreManager.resetScore();
         delay = 100;
         state = GameState.RUNNING;
@@ -118,9 +119,9 @@ public class GamePanel extends JPanel implements ActionListener {
         int[] head = snake.getHead();
         if (head[0] == food.getX() && head[1] == food.getY()) {
             snake.grow();
-            food.generateNewFood();
             scoreManager.addScore(10);
             SoundManager.playEat();
+            food.generateNewFood(snake);
 
             if (delay > 50) {
                 delay -= 2;

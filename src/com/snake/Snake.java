@@ -10,6 +10,7 @@ public class Snake {
     private List<int[]> body;
     private char direction;
     private boolean growing;
+    private boolean directionChanged = false;
 
     public Snake() {
         body = new ArrayList<>();
@@ -19,6 +20,7 @@ public class Snake {
         body.add(new int[]{3, 5});
         direction = 'R';
         growing = false;
+        directionChanged = false;
     }
 
     public void move() {
@@ -41,21 +43,30 @@ public class Snake {
         } else {
             growing = false;
         }
-    }
+
+        directionChanged = false;
+        }
 
     public void grow() {
         growing = true;
     }
 
     public void setDirection(char newDirection) {
-        
+        if (directionChanged) {
+            return;
+        }
+
         if ((direction == 'U' && newDirection == 'D') ||
             (direction == 'D' && newDirection == 'U') ||
             (direction == 'L' && newDirection == 'R') ||
             (direction == 'R' && newDirection == 'L')) {
             return;
         }
-        direction = newDirection;
+
+        if (direction != newDirection) {
+            direction = newDirection;
+            directionChanged = true;
+        }
     }
 
     public List<int[]> getBody() {

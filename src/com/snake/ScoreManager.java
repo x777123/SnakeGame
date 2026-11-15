@@ -38,30 +38,38 @@ public class ScoreManager {
         return highScore;
     }
 
+
     private int loadHighScore() {
-        try {
-            File file = new File(HIGH_SCORE_FILE);
-            if (file.exists()) {
-                BufferedReader reader = new BufferedReader(new FileReader(file));
-                String line = reader.readLine();
-                reader.close();
-                if (line != null) {
-                    return Integer.parseInt(line.trim());
-                }
-            }
-        } catch (IOException | NumberFormatException e) {
-           
+        File file = new File(HIGH_SCORE_FILE);
+
+        if (!file.exists()) {
+            return 0;
         }
+
+        try (BufferedReader reader =
+                new BufferedReader(new FileReader(file))) {
+
+            String line = reader.readLine();
+
+            if (line != null) {
+                return Math.max(0, Integer.parseInt(line.trim()));
+            }
+
+        } catch (IOException | NumberFormatException e) {
+            System.err.println("Failed to load high score: " + e.getMessage());
+        }
+
         return 0;
     }
 
     private void saveHighScore() {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(HIGH_SCORE_FILE));
+        try (BufferedWriter writer =
+                new BufferedWriter(new FileWriter(HIGH_SCORE_FILE))) {
+
             writer.write(String.valueOf(highScore));
-            writer.close();
+
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Failed to save high score: " + e.getMessage());
         }
     }
-}
+}  

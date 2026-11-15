@@ -19,6 +19,36 @@ public class Food {
         y = random.nextInt(GamePanel.SCREEN_HEIGHT / GamePanel.UNIT_SIZE);
     }
 
+    public void generateNewFood(Snake snake) {
+        if (snake == null) {
+            generateNewFood();
+            return;
+        }
+
+        int columns = GamePanel.SCREEN_WIDTH / GamePanel.UNIT_SIZE;
+        int rows = GamePanel.SCREEN_HEIGHT / GamePanel.UNIT_SIZE;
+
+        if (snake.getBody().size() >= columns * rows) {
+            return;
+        }
+
+        boolean onSnake;
+
+        do {
+            x = random.nextInt(columns);
+            y = random.nextInt(rows);
+
+            onSnake = false;
+
+            for (int[] part : snake.getBody()) {
+                if (part[0] == x && part[1] == y) {
+                    onSnake = true;
+                    break;
+                }
+            }
+        } while (onSnake);
+    }
+
     public int getX() {
         return x;
     }

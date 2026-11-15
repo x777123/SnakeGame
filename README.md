@@ -69,7 +69,6 @@ SnakeGame
 | Food | 먹이의 랜덤 생성 및 그리기 |
 | ScoreManager | 현재 점수와 최고 점수의 관리 및 파일 입출력 |
 | SoundManager | 사운드 재생 |
-
 ### 3. 게임 상태 관리
 열거형 `GameState`를 사용하여 세 가지 상태를 관리합니다.
 - MENU: 시작 메뉴
